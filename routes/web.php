@@ -32,12 +32,15 @@ Route::get('/minuman', [BarangController::class, 'showMinuman'])->name('minuman'
 // Pemesanan routes
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/lihat-pesanan', [PemesananController::class, 'index'])->name('pesanan.index');
-    Route::post('/makanan/store', [PemesananController::class, 'store'])->name('pesan.store');
+
+    // Form pesanan
+    Route::post('/makanan', [PemesananController::class, 'store'])->name('pesan.makanan');
+    Route::post('/minuman', [PemesananController::class, 'store'])->name('pesan.minuman');
+
+    // Aksi pesanan
     Route::delete('/pesanan/{id}', [PemesananController::class, 'destroy'])->name('pesanan.destroy');
     Route::post('/pesanan/{id}/approve', [PemesananController::class, 'aprove'])->name('pesanan.approve');
 });
-
-// Order routes
 
 // Profile management
 Route::middleware('auth')->group(function () {
@@ -45,15 +48,6 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/lihat-pesanan', [PemesananController::class, 'index'])->name('pesanan.index');
-    Route::post('/makanan', [PemesananController::class, 'store'])->name('pesan.store');
-    Route::post('/minuman', [PemesananController::class, 'store'])->name('pesan.store');
-    Route::delete('/pesanan/{id}', [PemesananController::class, 'destroy'])->name('pesanan.destroy');
-    Route::post('/pesanan/{id}/aprove', [PemesananController::class, 'aprove'])->name('pesanan.aprove');
-
-
-});
 
 // Authentication routes
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
